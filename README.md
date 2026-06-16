@@ -6,32 +6,20 @@ Welcome to my portfolio website! A modern, responsive portfolio showcasing my sk
 
 **CS Undergrad @ SUST** | Backend Developer | ML Enthusiast | Competitive Programmer
 
-I'm a 3rd-year Computer Science student building backend systems, crunching data, and grinding algorithmic problems. Passionate about writing clean APIs, training ML models, and competing in programming contests.
+I'm a 3rd-year Computer Science student building backend systems, crunching data, and grinding algorithmic problems. Passionate about writing clean APIs, training ML models, and competing in online programming contests.
 
 ---
 
-## 🛠️ Skills
+<!-- <!-- ## 🛠️ Skills -->
 
-### Languages
-- Python • C++ • C • JavaScript
-
-### Backend Development
-- FastAPI • REST APIs • Authentication/JWT
-
-### Databases
-- PostgreSQL • MySQL
-
-### Data & ML
-- Pandas • NumPy • Matplotlib • EDA
-
-### DevOps & Tools
+## Skill
+- AI / ML (Onboarding)
+- Python • C/C++ • JavaScript • FastAPI • REST APIs
 - Docker • Git • Linux • GitHub
-
-### Computer Science Core
 - Data Structures & Algorithms • OOP • Operating Systems • Networks
 
----
 
+<!-- 
 ## 📁 Projects
 
 The portfolio showcases **3+ shipped projects** including:
@@ -50,16 +38,16 @@ Active on **4 Online Judge platforms**:
 - **LeetCode** - Algorithm Practice
 - **HackerEarth** - Contest Platform
 
----
+--- -->
 
-## 📱 Website Features
+<!-- ## 📱 Website Features
 
 - **Fully Responsive** - Works perfectly on mobile, tablet, and desktop
 - **Modern Design** - Dark theme with smooth animations
 - **Fast Performance** - Optimized CSS & minimal JavaScript
 - **Accessibility** - Semantic HTML & keyboard navigation
 
----
+--- -->
 
 ## 🌐 Live Website
 
@@ -71,7 +59,6 @@ Visit the live portfolio to explore my work, view projects, and connect with me.
 
 ## 🔗 Connect With Me
 
-- **GitHub** → [rokun92](https://github.com/rokun92)
 - **LinkedIn** → [Rokunujjaman Rokun](https://www.linkedin.com/in/rokunujjaman-rokun-a00101416/)
 - **Kaggle** → [rokonujjamanrokon](https://www.kaggle.com/rokonujjamanrokon)
 - **Linktree** → [rokun_092](https://linktr.ee/rokun_092)
@@ -94,4 +81,3 @@ This portfolio is open for inspiration but please don't copy it directly. Feel f
 ---
 
 **Last Updated:** 2026  
-**Status:** Active & Maintained
