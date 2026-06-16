@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Rokunujjaman Rokun — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0b0f1a;
+    --surface:   #111827;
+    --border:    #1e2d45;
+    --accent:    #38bdf8;
+    --accent2:   #818cf8;
+    --green:     #34d399;
+    --text:      #e2e8f0;
+    --muted:     #64748b;
+    --mono:      'JetBrains Mono', monospace;
+    --sans:      'Inter', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(11,15,26,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem; height: 56px;
+  }
+  .nav-logo {
+    font-family: var(--mono); font-size: 13px; color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 13px; color: var(--muted); text-decoration: none;
+    font-family: var(--mono); letter-spacing: 0.04em;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 80px 2.5rem 3rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -30%; left: -10%;
+    width: 70%; height: 80%;
+    background: radial-gradient(ellipse at center, rgba(56,189,248,.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 900px; margin: 0 auto; width: 100%; }
+  .hero-eyebrow {
+    font-family: var(--mono); font-size: 13px; color: var(--accent);
+    letter-spacing: 0.15em; margin-bottom: 1.2rem;
+  }
+  .hero-name {
+    font-size: clamp(2.6rem, 6vw, 4.5rem);
+    font-weight: 600; line-height: 1.1;
+    letter-spacing: -0.02em; margin-bottom: 0.5rem;
+  }
+  .hero-name span { color: var(--accent); }
+  .hero-role {
+    font-family: var(--mono); font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--muted); margin-bottom: 2rem;
+  }
+  .hero-role .cursor {
+    display: inline-block; width: 2px; height: 1.2em;
+    background: var(--accent); margin-left: 2px;
+    animation: blink 1s step-end infinite; vertical-align: middle;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  .hero-desc {
+    max-width: 560px; color: #94a3b8; margin-bottom: 2.5rem;
+    font-size: 15px; line-height: 1.75;
+  }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .65rem 1.5rem; border-radius: 6px;
+    font-size: 13px; font-family: var(--mono); letter-spacing: 0.06em;
+    text-decoration: none; transition: all .2s; cursor: pointer; border: none;
+  }
+  .btn-primary {
+    background: var(--accent); color: #0b0f1a; font-weight: 700;
+  }
+  .btn-primary:hover { background: #7dd3fc; transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3.5rem;
+    padding-top: 2rem; border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .stat-num {
+    font-family: var(--mono); font-size: 2rem; font-weight: 700;
+    color: var(--accent); line-height: 1;
+  }
+  .stat-label { font-size: 12px; color: var(--muted); letter-spacing: 0.08em; margin-top: 4px; }
+
+  /* ── SECTION WRAPPER ── */
+  section { padding: 5rem 2.5rem; max-width: 900px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--mono); font-size: 12px; color: var(--accent);
+    letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: .75rem;
+  }
+  .section-title {
+    font-size: 2rem; font-weight: 600; margin-bottom: 2.5rem;
+    letter-spacing: -0.01em; line-height: 1.2;
+  }
+
+  /* ── SKILLS GRID ── */
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .skill-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.2rem 1.4rem;
+    transition: border-color .2s, transform .2s;
+  }
+  .skill-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .skill-card-label {
+    font-family: var(--mono); font-size: 11px; color: var(--accent);
+    letter-spacing: 0.15em; margin-bottom: .6rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .skill-tag {
+    background: rgba(56,189,248,.08); color: #7dd3fc;
+    border: 1px solid rgba(56,189,248,.15);
+    font-size: 12px; padding: 2px 8px; border-radius: 4px;
+    font-family: var(--mono);
+  }
+
+  /* ── PROJECTS ── */
+  .projects-grid { display: grid; gap: 1.2rem; }
+  .project-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.6rem 1.8rem;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 1rem; align-items: start;
+    transition: border-color .2s, transform .2s;
+    text-decoration: none; color: inherit;
+  }
+  .project-card:hover { border-color: var(--accent2); transform: translateY(-2px); }
+  .project-card-name {
+    font-weight: 600; font-size: 1.05rem; margin-bottom: .4rem;
+    display: flex; align-items: center; gap: .5rem;
+  }
+  .project-card-name .badge {
+    font-family: var(--mono); font-size: 10px; font-weight: 400;
+    background: rgba(129,140,248,.12); color: var(--accent2);
+    border: 1px solid rgba(129,140,248,.2);
+    padding: 1px 7px; border-radius: 4px;
+  }
+  .project-card-desc { font-size: 13.5px; color: #94a3b8; line-height: 1.6; }
+  .project-card-stack { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .8rem; }
+  .stack-tag {
+    font-family: var(--mono); font-size: 11px; color: var(--muted);
+    background: rgba(255,255,255,.04); border: 1px solid var(--border);
+    padding: 2px 7px; border-radius: 4px;
+  }
+  .project-arrow { color: var(--muted); font-size: 1.2rem; margin-top: 2px; }
+
+  /* ── CP SECTION ── */
+  .cp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+  .cp-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.4rem 1.6rem;
+    transition: border-color .2s; text-decoration: none; color: inherit;
+  }
+  .cp-card:hover { border-color: var(--green); }
+  .cp-platform {
+    font-family: var(--mono); font-size: 11px; color: var(--green);
+    letter-spacing: 0.15em; margin-bottom: .5rem;
+  }
+  .cp-handle { font-size: 1.1rem; font-weight: 600; margin-bottom: .3rem; }
+  .cp-desc { font-size: 12.5px; color: var(--muted); }
+
+  .cp-stats {
+    display: flex; gap: 1rem; margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .cp-stat-box {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.2rem 1rem;
+    flex: 1; min-width: 120px; text-align: center;
+  }
+  .cp-stat-num {
+    font-family: var(--mono); font-size: 1.6rem; font-weight: 700;
+    color: var(--accent); line-height: 1.2; margin-bottom: 0.2rem;
+  }
+  .cp-stat-label {
+    font-size: 11px; color: var(--muted); letter-spacing: 0.05em;
+    text-transform: uppercase; font-family: var(--mono);
+  }
+  .cp-stat-total {
+    border-color: var(--accent);
+    background: rgba(56,189,248,.05);
+  }
+  .cp-stat-total .cp-stat-num {
+    color: #7dd3fc;
+  }
+
+  .cp-topics { margin-top: 2.5rem; }
+  .cp-topics-title { font-size: 13px; color: var(--muted); margin-bottom: 1rem; font-family: var(--mono); }
+  .topics-wrap { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .topic-pill {
+    font-family: var(--mono); font-size: 12px;
+    background: rgba(52,211,153,.07); color: var(--green);
+    border: 1px solid rgba(52,211,153,.15);
+    padding: 4px 12px; border-radius: 20px;
+  }
+
+  /* ── CONTACT ── */
+  .contact-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: .6rem;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: .8rem 1.2rem;
+    text-decoration: none; color: var(--text);
+    font-family: var(--mono); font-size: 13px;
+    transition: border-color .2s, color .2s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+  .contact-link svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    text-align: center; padding: 2rem;
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+  }
+
+  /* ── DIVIDER ── */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  @media (max-width: 640px) {
+    nav { padding: 0 1.2rem; }
+    .nav-links { gap: 1.2rem; }
+    section { padding: 3.5rem 1.2rem; }
+    .hero { padding: 80px 1.2rem 2rem; }
+    .hero-stats { gap: 1.5rem; }
+    .project-card { grid-template-columns: 1fr; }
+    .project-arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">rokun@portfolio:~$</div>
+  <ul class="nav-links">
+    <li><a href="#about">about</a></li>
+    <li><a href="#projects">projects</a></li>
+    <li><a href="#cp">cp</a></li>
+    <li><a href="#contact">contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="about">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">// hello, world</div>
+    <h1 class="hero-name">Rokunujjaman<br><span>Rokun</span></h1>
+    <div class="hero-role" id="typed-role">CS Undergrad @ SUST<span class="cursor"></span></div>
+    <p class="hero-desc">
+      Computer Science student building backend systems, crunching data, and grinding algorithmic problems.
+      Passionate about writing clean APIs, training ML models, and competing in programming contests.
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="https://github.com/rokun92" target="_blank">
+        <svg viewBox="0 0 24 24" width="15" fill="currentColor"><path d="M12 .3C5.4.3 0 5.6 0 12.3c0 5.3 3.4 9.8 8.2 11.4.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2 0-.4-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6C20.6 22 24 17.6 24 12.3 24 5.6 18.6.3 12 .3z"/></svg>
+        GitHub
+      </a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/rokunujjaman-rokun-a00101416/" target="_blank">
+        <svg viewBox="0 0 24 24" width="15" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.58 0 4.24 2.36 4.24 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+        LinkedIn
+      </a>
+      <a class="btn btn-ghost" href="https://www.kaggle.com/rokonujjamanrokon" target="_blank">
+        <svg viewBox="0 0 24 24" width="15" fill="currentColor"><path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.334z"/></svg>
+        Kaggle
+      </a>
+      <a class="btn btn-ghost" href="https://linktr.ee/rokun_092" target="_blank">
+        <svg viewBox="0 0 24 24" width="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+        Linktree
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">3rd</div>
+        <div class="stat-label">YEAR — SUST CSE</div>
+      </div>
+      <div>
+        <div class="stat-num">3+</div>
+        <div class="stat-label">PROJECTS SHIPPED</div>
+      </div>
+      <div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">OJ PROFILES ACTIVE</div>
+      </div>
+      <div>
+        <div class="stat-num">ML</div>
+        <div class="stat-label">+ BACKEND + CP</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">// 01 — skills</div>
+  <h2 class="section-title">What I work with</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-card-label">LANGUAGES</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">C++</span>
+        <span class="skill-tag">C</span>
+        <span class="skill-tag">JavaScript</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-label">BACKEND</div>
+      <div class="skill-tags">
+        <span class="skill-tag">FastAPI</span>
+        <span class="skill-tag">REST API</span>
+        <span class="skill-tag">Auth/JWT</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-label">DATABASES</div>
+      <div class="skill-tags">
+        <span class="skill-tag">PostgreSQL</span>
+        <span class="skill-tag">MySQL</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-label">DATA / ML</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Pandas</span>
+        <span class="skill-tag">NumPy</span>
+        <span class="skill-tag">Matplotlib</span>
+        <span class="skill-tag">EDA</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-label">DEVOPS / TOOLS</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Docker</span>
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">Linux</span>
+        <span class="skill-tag">GitHub</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-label">CS CORE</div>
+      <div class="skill-tags">
+        <span class="skill-tag">DSA</span>
+        <span class="skill-tag">OOP</span>
+        <span class="skill-tag">OS</span>
+        <span class="skill-tag">Networks</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">// 02 — projects</div>
+  <h2 class="section-title">Things I've built</h2>
+  <div class="projects-grid">
+    <a class="project-card" href="https://github.com/rokun92/lms_api" target="_blank">
+      <div>
+        <div class="project-card-name">
+          LMS API
+          <span class="badge">Backend</span>
+        </div>
+        <div class="project-card-desc">
+          Full-featured Learning Management System backend. RESTful endpoints for user and resource management, relational database integration, and Dockerized for smooth deployment. Built with production-grade architecture patterns.
+        </div>
+        <div class="project-card-stack">
+          <span class="stack-tag">FastAPI</span>
+          <span class="stack-tag">PostgreSQL</span>
+          <span class="stack-tag">MySQL</span>
+          <span class="stack-tag">Docker</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </a>
+    <a class="project-card" href="https://github.com/rokun92/Running-Hero" target="_blank">
+      <div>
+        <div class="project-card-name">
+          Running Hero
+          <span class="badge">Game Dev</span>
+        </div>
+        <div class="project-card-desc">
+          A game built from scratch — core mechanics, object interactions, user controls, and state management all hand-rolled. A deep dive into software design thinking and problem-solving under creative constraints.
+        </div>
+        <div class="project-card-stack">
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">Game Logic</span>
+          <span class="stack-tag">State Machine</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </a>
+    <a class="project-card" href="https://www.kaggle.com/rokonujjamanrokon" target="_blank">
+      <div>
+        <div class="project-card-name">
+          ML & Data Analysis
+          <span class="badge">Data Science</span>
+        </div>
+        <div class="project-card-desc">
+          Collection of EDA notebooks and ML workflows on real-world datasets — data cleaning, feature engineering, visualization to surface hidden patterns, and end-to-end predictive models. All published on Kaggle.
+        </div>
+        <div class="project-card-stack">
+          <span class="stack-tag">Pandas</span>
+          <span class="stack-tag">NumPy</span>
+          <span class="stack-tag">Matplotlib</span>
+          <span class="stack-tag">Scikit-learn</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- COMPETITIVE PROGRAMMING -->
+<section id="cp">
+  <div class="section-label">// 03 — competitive programming</div>
+  <h2 class="section-title">Algorithmic problem solving</h2>
+  <div class="cp-grid">
+    <a class="cp-card" href="https://codeforces.com/profile/Rokun" target="_blank">
+      <div class="cp-platform">CODEFORCES</div>
+      <div class="cp-handle">Rokun</div>
+      <div class="cp-desc">Regular contest participation and problem practice</div>
+    </a>
+    <a class="cp-card" href="https://atcoder.jp/users/FarBetter" target="_blank">
+      <div class="cp-platform">ATCODER</div>
+      <div class="cp-handle">FarBetter</div>
+      <div class="cp-desc">Japanese OJ known for clean, well-curated problems</div>
+    </a>
+    <a class="cp-card" href="https://leetcode.com/u/rokun92/" target="_blank">
+      <div class="cp-platform">LEETCODE</div>
+      <div class="cp-handle">rokun92</div>
+      <div class="cp-desc">Interview prep and systematic topic coverage</div>
+    </a>
+    <a class="cp-card" href="https://vjudge.net/user/Rokunujjaman" target="_blank">
+      <div class="cp-platform">VJUDGE</div>
+      <div class="cp-handle">Rokunujjaman</div>
+      <div class="cp-desc">Virtual Judge platform for practicing across multiple OJs</div>
+    </a>
+  </div>
+
+  <div class="cp-stats">
+    <div class="cp-stat-box">
+      <div class="cp-stat-num">300+</div>
+      <div class="cp-stat-label">Codeforces</div>
+    </div>
+    <div class="cp-stat-box">
+      <div class="cp-stat-num">250+</div>
+      <div class="cp-stat-label">LeetCode</div>
+    </div>
+    <div class="cp-stat-box">
+      <div class="cp-stat-num">100+</div>
+      <div class="cp-stat-label">AtCoder</div>
+    </div>
+    <div class="cp-stat-box">
+      <div class="cp-stat-num">150+</div>
+      <div class="cp-stat-label">VJudge</div>
+    </div>
+    <div class="cp-stat-box cp-stat-total">
+      <div class="cp-stat-num">800+</div>
+      <div class="cp-stat-label">Total Solved</div>
+    </div>
+  </div>
+
+  <div class="cp-topics">
+    <div class="cp-topics-title">// topics practiced</div>
+    <div class="topics-wrap">
+      <span class="topic-pill">Dynamic Programming</span>
+      <span class="topic-pill">Graph Algorithms</span>
+      <span class="topic-pill">Greedy</span>
+      <span class="topic-pill">Binary Search</span>
+      <span class="topic-pill">Hashing</span>
+      <span class="topic-pill">Recursion & Backtracking</span>
+      <span class="topic-pill">Trees</span>
+      <span class="topic-pill">Advanced Data Structures</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">// 04 — contact</div>
+  <h2 class="section-title">Let's connect</h2>
+  <div class="contact-links">
+    <a class="contact-link" href="mailto:rokonujjamanrokon5259@gmail.com">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      rokonujjamanrokon5259@gmail.com
+    </a>
+    <a class="contact-link" href="https://github.com/rokun92" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3C5.4.3 0 5.6 0 12.3c0 5.3 3.4 9.8 8.2 11.4.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2 0-.4-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6C20.6 22 24 17.6 24 12.3 24 5.6 18.6.3 12 .3z"/></svg>
+      github.com/rokun92
+    </a>
+    <a class="contact-link" href="https://www.linkedin.com/in/rokunujjaman-rokun-a00101416/" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.58 0 4.24 2.36 4.24 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+      LinkedIn
+    </a>
+    <a class="contact-link" href="https://www.kaggle.com/rokonujjamanrokon" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.334z"/></svg>
+      Kaggle
+    </a>
+    <a class="contact-link" href="https://linktr.ee/rokun_092" target="_blank">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+      Linktree
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>Built with vanilla HTML/CSS · Rokunujjaman Rokun © 2025</p>
+</footer>
+
+<script>
+  // Typing effect
+  const roles = [
+    'CS Undergrad @ SUST',
+    'Backend Developer',
+    'ML Enthusiast',
+    'Competitive Programmer',
+  ];
+  let ri = 0, ci = 0, deleting = false;
+  const el = document.getElementById('typed-role');
+  function type() {
+    const role = roles[ri];
+    if (!deleting) {
+      ci++;
+      el.innerHTML = role.slice(0, ci) + '<span class="cursor"></span>';
+      if (ci === role.length) { deleting = true; setTimeout(type, 2000); return; }
+    } else {
+      ci--;
+      el.innerHTML = role.slice(0, ci) + '<span class="cursor"></span>';
+      if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; }
+    }
+    setTimeout(type, deleting ? 40 : 80);
+  }
+  setTimeout(type, 1200);
+</script>
+</body>
+</html>
