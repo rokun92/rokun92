@@ -1,8 +1,6 @@
-# 🚀 Rokunujjaman Rokun — Portfolio
+# 🚀 Rokunujjaman Rokun 
 
-Welcome to my portfolio website! A modern, responsive portfolio showcasing my skills, projects, and competitive programming achievements.
-
-## 📋 About
+## 📋 About Me
 
 **CS Undergrad @ SUST** | Backend Developer | ML Enthusiast | Competitive Programmer
 
