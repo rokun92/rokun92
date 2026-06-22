@@ -13,7 +13,7 @@ I'm a 3rd-year Computer Science student building backend systems, crunching data
 ## Skill
 - AI / ML (Onboarding)
 - Python • C/C++ • JavaScript • FastAPI • REST APIs
-- Docker • Git • Linux • Git
+- Docker • Git • Linux
 - Data Structures & Algorithms • OOP • Operating Systems • Networks
 
 
