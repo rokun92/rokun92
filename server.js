@@ -101,8 +101,7 @@ http.createServer(async (req, res) => {
     return;
   }
 
-  // Expose specific environment variables to the client
-  if (pathname === '/config.js') {
+  if (pathname === '/config.js' || pathname === '/api/config.js') {
     const script = `var env = window.env = ${JSON.stringify(appEnv)};`;
     send(res, 200, script, { 'Content-Type': 'application/javascript; charset=utf-8' });
     return;

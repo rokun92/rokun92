@@ -63,12 +63,12 @@
 <body>
 
 <nav>
-  <a class="nav-logo" href="../index.html">rokun@portfolio:~$</a>
+  <a class="nav-logo" href="/index.html">rokun@portfolio:~$</a>
   <ul class="nav-links">
-    <li><a href="../index.html">home</a></li>
-    <li><a href="../index.html#projects">projects</a></li>
+    <li><a href="/index.html">home</a></li>
+    <li><a href="/index.html#projects">projects</a></li>
     <li><a href="index.html" class="active">blog</a></li>
-    <li><a href="../index.html#contact">contact</a></li>
+    <li><a href="/index.html#contact">contact</a></li>
   </ul>
 </nav>
 
@@ -83,11 +83,11 @@
 </main>
 
 <footer>
-  <p>Rokunujjaman Rokun © 2026 · <a href="../index.html" style="color:var(--accent)">back to portfolio</a></p>
+  <p>Rokunujjaman Rokun © 2026 · <a href="/index.html" style="color:var(--accent)">back to portfolio</a></p>
 </footer>
 
-<script src="/config.js"></script>
-<script src="../assets/supabase-config.js"></script>
+<script src="/api/config.js"></script>
+<script src="/assets/supabase-config.js"></script>
 <script>
   async function loadPosts() {
     const container = document.getElementById('posts');
@@ -112,7 +112,7 @@
       const date = new Date(post.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
       const tags = (post.tags || []).map(t => `<span class="post-tag">${escapeHtml(t)}</span>`).join('');
       return `
-        <a class="post-card" href="post.html?slug=${encodeURIComponent(post.slug)}">
+        <a class="post-card" href="/blog/post.html?slug=${encodeURIComponent(post.slug)}">
           <div class="post-date">${date}</div>
           <div class="post-title">${escapeHtml(post.title)}</div>
           <div class="post-excerpt">${escapeHtml(post.excerpt || '')}</div>

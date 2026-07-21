@@ -145,8 +145,8 @@
   </div>
 </main>
 
-<script src="/config.js"></script>
-<script src="../assets/supabase-config.js"></script>
+<script src="/api/config.js"></script>
+<script src="/assets/supabase-config.js"></script>
 <script>
   let editingPostId = null;
   let slugManuallyEdited = false;
@@ -212,7 +212,7 @@
         </div>
         <div class="post-row-actions">
           <button class="icon-btn" onclick="editPost('${p.id}')">Edit</button>
-          <a class="icon-btn" href="post.html?slug=${encodeURIComponent(p.slug)}" target="_blank">View</a>
+          <a class="icon-btn" href="/blog/post.html?slug=${encodeURIComponent(p.slug)}" target="_blank">View</a>
           <button class="icon-btn danger" onclick="deletePost('${p.id}', '${escapeHtml(p.title).replace(/'/g, "\\'")}')">Delete</button>
         </div>
       </div>
