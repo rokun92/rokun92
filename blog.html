@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rokunujjaman - Personal Blog with MongoDB-backed posts, reactions, and comments">
+    <title>Blog - Rokunujjaman</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="minimal">
+    <header class="site-header">
+        <nav class="navbar navbar-fixed-top" aria-label="Primary Navigation">
+            <div class="nav-container">
+                <a href="index.html" class="nav-brand">Rokunujjaman</a>
+                <button type="button" class="navbar-toggle" id="menu-toggle" aria-label="Toggle navigation">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="navbar-collapse" id="navbar-collapse">
+                    <ul class="nav-list">
+                        <li><a href="index.html">01 : Home</a></li>
+                        <li><a href="resume.html">02 : Resume</a></li>
+                        <li class="active"><a href="blog.html">03 : Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="blog-hero">
+        <div class="container">
+            <p class="blog-eyebrow">MongoDB-backed microblog</p>
+            <h1 class="blog-hero-title">Write, react, and comment on posts</h1>
+        </div>
+    </section>
+
+    <main class="blog-section">
+        <div class="container blog-layout">
+            <section class="blog-panel blog-composer-panel">
+                <div class="panel-heading">
+                    <h2>Publish a post</h2>
+                    <p>Share a thought, draft, or quick update. It will be stored in MongoDB.</p>
+                </div>
+
+                <form id="post-form" class="blog-form">
+                    <label>
+                        <span>Title</span>
+                        <input type="text" name="title" maxlength="120" placeholder="What are you writing about?" required>
+                    </label>
+
+                    <label>
+                        <span>Author</span>
+                        <input type="text" name="author" maxlength="80" placeholder="Your name" value="Rokunujjaman" required>
+                    </label>
+
+                    <label>
+                        <span>Content</span>
+                        <textarea name="content" rows="8" maxlength="4000" placeholder="Write your post here..." required></textarea>
+                    </label>
+
+                    <div class="blog-form-footer">
+                        <p id="post-form-status" class="form-status" aria-live="polite"></p>
+                        <button type="submit" class="primary-action">Publish post</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="blog-panel blog-feed-panel">
+                <div class="blog-feed-toolbar">
+                    <div>
+                        <h2>Latest posts</h2>
+                        <p id="blog-count" class="toolbar-copy">Loading posts...</p>
+                    </div>
+                    <button type="button" class="secondary-action" id="refresh-posts">Refresh</button>
+                </div>
+
+                <div id="blog-feed" class="blog-feed"></div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer-container text-center">
+        <div class="container">
+            <p class="footer-quote">Keep Smiling :)</p>
+            <p class="footer-copy">&copy; Rokunujjaman 2026</p>
+        </div>
+    </footer>
+
+    <script src="blog-client.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

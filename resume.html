@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rokunujjaman - Resume & Experience">
+    <title>Resume - Rokunujjaman</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .page-header-container {
+            background-color: #0f172a;
+            color: #ffffff;
+            padding: 120px 0 60px;
+            text-align: center;
+        }
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .page-subtitle {
+            color: #94a3b8;
+            font-size: 1.1rem;
+        }
+        .resume-section {
+            padding: 50px 0;
+        }
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            margin-top: 24px;
+        }
+        .timeline-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .timeline-role {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .timeline-date {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #3b82f6;
+            background: #eff6ff;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+        .timeline-org {
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body class="minimal">
+    <header class="site-header">
+        <nav class="navbar navbar-fixed-top" aria-label="Primary Navigation">
+            <div class="nav-container">
+                <a href="index.html" class="nav-brand">Rokunujjaman</a>
+                <button type="button" class="navbar-toggle" id="menu-toggle" aria-label="Toggle navigation">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="navbar-collapse" id="navbar-collapse">
+                    <ul class="nav-list">
+                        <li><a href="index.html">01 : Home</a></li>
+                        <li class="active"><a href="resume.html">02 : Resume</a></li>
+                        <li><a href="blog.html">03 : Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-header-container">
+        <div class="container">
+            <h1 class="page-title">Resume & Curriculum Vitae</h1>
+            <p class="page-subtitle">Education, Projects, and AI/ML Research Experience</p>
+        </div>
+    </div>
+
+    <main class="resume-section">
+        <div class="container">
+            <h2 class="section-title">Education & Focus</h2>
+            <div class="timeline">
+                <div class="timeline-card">
+                    <div class="timeline-header">
+                        <span class="timeline-role">BSc. in Computer Science & Engineering</span>
+                        <span class="timeline-date">Present</span>
+                    </div>
+                    <div class="timeline-org">Shahjalal University of Science and Technology (SUST)</div>
+                    <p class="intro-p" style="margin-bottom: 0;">
+                        Focusing on Machine Learning algorithms, Data Structures & Algorithms, Systems Engineering, and Unsupervised Learning techniques for healthcare/climate research.
+                    </p>
+                </div>
+
+                <div class="timeline-card">
+                    <div class="timeline-header">
+                        <span class="timeline-role">Research Project: Heat-Stroke Analysis</span>
+                        <span class="timeline-date">2025 - Present</span>
+                    </div>
+                    <div class="timeline-org">AI & ML Research Group</div>
+                    <p class="intro-p" style="margin-bottom: 0;">
+                        Investigating heat-stroke vulnerability and climate impact patterns in Bangladesh utilizing unsupervised machine learning clustering algorithms and environmental datasets.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-container text-center">
+        <div class="container">
+            <p class="footer-quote">Inspired by dank memes and big dreams :')</p>
+            <p class="footer-copy">&copy; Rokunujjaman 2026</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
