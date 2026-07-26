@@ -314,13 +314,22 @@ async function bootstrap() {
     const collection = await getCollection();
     await collection.createIndex({ createdAt: -1 });
     await seedCollectionIfEmpty(collection);
-
-    return app;
 }
 
-const collectionPromise = getCollection().then(async (collection) => {
-    await collection.createIndex({ createdAt: -1 });
-    await seedCollectionIfEmpty(collection);
+let initialized = false;
+
+app.use(async (req, res, next) => {
+    if (!initialized) {
+        await bootstrap();
+        initialized = true;
+    }
+    next();
 });
+
+if (!process.env.VERCEL) {
+    app.listen(port, () => {
+        console.log(`Blog server running on http://localhost:${port}`);
+    });
+}
 
 export default app; 
