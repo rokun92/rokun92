@@ -10,6 +10,7 @@ type CommentDoc = {
     _id: ObjectId;
     name: string;
     content: string;
+    parentId: string | null;
     createdAt: Date;
 };
 
@@ -24,6 +25,15 @@ type PostDoc = {
     comments: CommentDoc[];
 };
 
+type CommentView = {
+    id: string;
+    name: string;
+    content: string;
+    parentId: string | null;
+    createdAt: string;
+    replies: CommentView[];
+};
+
 type PostView = {
     id: string;
     title: string;
@@ -32,12 +42,8 @@ type PostView = {
     createdAt: string;
     updatedAt: string;
     reactions: Record<ReactionType, number>;
-    comments: Array<{
-        id: string;
-        name: string;
-        content: string;
-        createdAt: string;
-    }>;
+    comments: CommentView[];
+    commentCount: number;
 };
 
 const app = express();
@@ -46,6 +52,7 @@ const mongoUri = process.env.MONGODB_URI ?? "";
 const databaseName = process.env.MONGODB_DB ?? 'psite';
 const collectionName = 'posts';
 const reactionTypes: ReactionType[] = ['like', 'love', 'insight', 'clap'];
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? '';
 
 const client = new MongoClient(mongoUri);
 let clientPromise: Promise<MongoClient> | null = null;
@@ -74,6 +81,36 @@ function ensureText(value: unknown, fieldName: string, maxLength: number) {
     return trimmed;
 }
 
+/** Build a nested comment tree from the flat comments array */
+function buildCommentTree(comments: CommentDoc[]): CommentView[] {
+    const map = new Map<string, CommentView>();
+    const roots: CommentView[] = [];
+
+    // First pass: create view objects
+    for (const c of comments) {
+        const view: CommentView = {
+            id: c._id.toHexString(),
+            name: c.name,
+            content: c.content,
+            parentId: c.parentId,
+            createdAt: c.createdAt.toISOString(),
+            replies: []
+        };
+        map.set(view.id, view);
+    }
+
+    // Second pass: link children to parents
+    for (const view of map.values()) {
+        if (view.parentId && map.has(view.parentId)) {
+            map.get(view.parentId)!.replies.push(view);
+        } else {
+            roots.push(view);
+        }
+    }
+
+    return roots;
+}
+
 function toPostView(post: PostDoc): PostView {
     return {
         id: post._id.toHexString(),
@@ -83,12 +120,8 @@ function toPostView(post: PostDoc): PostView {
         createdAt: post.createdAt.toISOString(),
         updatedAt: post.updatedAt.toISOString(),
         reactions: post.reactions,
-        comments: post.comments.map((comment) => ({
-            id: comment._id.toHexString(),
-            name: comment.name,
-            content: comment.content,
-            createdAt: comment.createdAt.toISOString()
-        }))
+        comments: buildCommentTree(post.comments),
+        commentCount: post.comments.length
     };
 }
 
@@ -144,6 +177,19 @@ function assertValidPostId(postId: string) {
     return new ObjectId(postId);
 }
 
+/** Middleware: check admin password from Authorization header */
+function requireAdmin(req: express.Request, res: express.Response, next: express.NextFunction) {
+    const authHeader = req.headers.authorization ?? '';
+    const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : '';
+
+    if (!ADMIN_PASSWORD || token !== ADMIN_PASSWORD) {
+        sendError(res, 401, 'Unauthorized');
+        return;
+    }
+
+    next();
+}
+
 app.get('/api/health', (_req, res) => {
     res.json({ ok: true });
 });
@@ -159,7 +205,13 @@ app.get('/api/posts', async (_req, res) => {
     }
 });
 
-app.post('/api/posts', async (req, res) => {
+/** Admin-only: verify password */
+app.post('/api/admin/verify', requireAdmin, (_req, res) => {
+    res.json({ ok: true });
+});
+
+/** Admin-only: create post */
+app.post('/api/posts', requireAdmin, async (req, res) => {
     try {
         const title = ensureText(req.body?.title, 'Title', 120);
         const content = ensureText(req.body?.content, 'Content', 4000);
@@ -217,10 +269,14 @@ app.post('/api/posts/:id/reactions', async (req, res) => {
     }
 });
 
+/** Add comment (supports parentId for nested replies) */
 app.post('/api/posts/:id/comments', async (req, res) => {
     try {
         const name = ensureText(req.body?.name ?? 'Guest', 'Name', 80);
         const content = ensureText(req.body?.content, 'Comment', 1000);
+        const parentId = typeof req.body?.parentId === 'string' && req.body.parentId.trim()
+            ? req.body.parentId.trim()
+            : null;
 
         const collection = await getCollection();
         const postId = assertValidPostId(req.params.id);
@@ -229,6 +285,7 @@ app.post('/api/posts/:id/comments', async (req, res) => {
             _id: new ObjectId(),
             name,
             content,
+            parentId,
             createdAt: new Date()
         };
 

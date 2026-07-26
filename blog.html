@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Rokunujjaman - Personal Blog with MongoDB-backed posts, reactions, and comments">
+    <meta name="description" content="Rokunujjaman - Personal Blog with reactions and nested comments">
     <title>Blog - Rokunujjaman</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="blog-styles.css">
 </head>
 <body class="minimal">
     <header class="site-header">
@@ -32,55 +33,29 @@
         </nav>
     </header>
 
-    <section class="blog-hero">
-        <div class="container">
-            <p class="blog-eyebrow">MongoDB-backed microblog</p>
-            <h1 class="blog-hero-title">Write, react, and comment on posts</h1>
+    <section class="blog-hero-v2">
+        <div class="blog-hero-bg"></div>
+        <div class="container blog-hero-inner">
+            <span class="blog-badge">✦ Blog</span>
+            <h1 class="blog-hero-title-v2">Thoughts, Ideas <br>&amp; Insights</h1>
+            <p class="blog-hero-subtitle-v2">Read, react, and join the conversation</p>
         </div>
     </section>
 
-    <main class="blog-section">
-        <div class="container blog-layout">
-            <section class="blog-panel blog-composer-panel">
-                <div class="panel-heading">
-                    <h2>Publish a post</h2>
-                    <p>Share a thought, draft, or quick update. It will be stored in MongoDB.</p>
+    <main class="blog-main-v2">
+        <div class="container">
+            <div class="blog-toolbar-v2">
+                <div class="blog-toolbar-left">
+                    <h2 class="blog-feed-heading">Latest Posts</h2>
+                    <p id="blog-count" class="blog-feed-count">Loading posts...</p>
                 </div>
+                <button type="button" class="btn-refresh" id="refresh-posts" title="Refresh posts">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                    <span>Refresh</span>
+                </button>
+            </div>
 
-                <form id="post-form" class="blog-form">
-                    <label>
-                        <span>Title</span>
-                        <input type="text" name="title" maxlength="120" placeholder="What are you writing about?" required>
-                    </label>
-
-                    <label>
-                        <span>Author</span>
-                        <input type="text" name="author" maxlength="80" placeholder="Your name" value="Rokunujjaman" required>
-                    </label>
-
-                    <label>
-                        <span>Content</span>
-                        <textarea name="content" rows="8" maxlength="4000" placeholder="Write your post here..." required></textarea>
-                    </label>
-
-                    <div class="blog-form-footer">
-                        <p id="post-form-status" class="form-status" aria-live="polite"></p>
-                        <button type="submit" class="primary-action">Publish post</button>
-                    </div>
-                </form>
-            </section>
-
-            <section class="blog-panel blog-feed-panel">
-                <div class="blog-feed-toolbar">
-                    <div>
-                        <h2>Latest posts</h2>
-                        <p id="blog-count" class="toolbar-copy">Loading posts...</p>
-                    </div>
-                    <button type="button" class="secondary-action" id="refresh-posts">Refresh</button>
-                </div>
-
-                <div id="blog-feed" class="blog-feed"></div>
-            </section>
+            <div id="blog-feed" class="blog-feed-v2"></div>
         </div>
     </main>
 
@@ -90,6 +65,8 @@
             <p class="footer-copy">&copy; Rokunujjaman 2026</p>
         </div>
     </footer>
+
+    <p id="post-form-status" class="form-status sr-only" aria-live="polite"></p>
 
     <script src="blog-client.js"></script>
     <script src="script.js"></script>
