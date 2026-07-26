@@ -315,12 +315,12 @@ async function bootstrap() {
     await collection.createIndex({ createdAt: -1 });
     await seedCollectionIfEmpty(collection);
 
-    app.listen(port, () => {
-        console.log(`Blog server running on http://localhost:${port}`);
-    });
+    return app;
 }
 
-bootstrap().catch((error) => {
-    console.error('Failed to start blog server', error);
-    process.exitCode = 1;
+const collectionPromise = getCollection().then(async (collection) => {
+    await collection.createIndex({ createdAt: -1 });
+    await seedCollectionIfEmpty(collection);
 });
+
+export default app; 
