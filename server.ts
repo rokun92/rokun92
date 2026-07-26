@@ -317,13 +317,27 @@ async function bootstrap() {
 }
 
 let initialized = false;
+let initPromise: Promise<void> | null = null;
 
 app.use(async (req, res, next) => {
-    if (!initialized) {
-        await bootstrap();
-        initialized = true;
+    try {
+        if (!initialized) {
+            if (!initPromise) {
+                initPromise = bootstrap();
+            }
+
+            await initPromise;
+            initialized = true;
+        }
+
+        next();
+    } catch (error) {
+        console.error("Bootstrap failed:", error);
+        res.status(500).json({
+            error: "Database initialization failed",
+            message: error instanceof Error ? error.message : String(error)
+        });
     }
-    next();
 });
 
 if (!process.env.VERCEL) {
