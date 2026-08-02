@@ -1,8 +1,11 @@
 import express from 'express';
 import { MongoClient, ObjectId, type Collection } from 'mongodb';
-import dotenv from "dotenv";
 
-dotenv.config();
+// Don't use dotenv in Vercel - environment variables are provided directly
+// Only load .env file for local development
+if (!process.env.VERCEL) {
+  await import('dotenv').then(dotenv => dotenv.default.config());
+}
 
 type ReactionType = 'like' | 'love' | 'insight' | 'clap';
 
