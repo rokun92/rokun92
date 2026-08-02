@@ -62,26 +62,22 @@ function getMongoUri(): string {
     
     // For Atlas connections, we need specific SSL settings
     if (mongoUri.includes('mongodb.net')) {
-        // Check if query params already exist
-        const separator = mongoUri.includes('?') ? '&' : '?';
-        let uri = mongoUri;
+        // Parse existing query parameters
+        const [baseUri, existingQuery] = mongoUri.split('?');
+        const params = new URLSearchParams(existingQuery || '');
         
-        // Only add SSL parameters if not already present
-        if (!uri.includes('ssl=true') && !uri.includes('tls=true')) {
-            uri += `${separator}tls=true`;
+        // Set required parameters (will override if already present)
+        if (!params.has('tls') && !params.has('ssl')) {
+            params.set('tls', 'true');
         }
-        if (!uri.includes('retryWrites=')) {
-            uri += `${separator}retryWrites=true`;
+        if (!params.has('retryWrites')) {
+            params.set('retryWrites', 'true');
         }
-        if (!uri.includes('w=')) {
-            uri += `${separator}w=majority`;
-        }
-        // Add authSource which is often required for Atlas
-        if (!uri.includes('authSource=')) {
-            uri += `${separator}authSource=admin`;
+        if (!params.has('w')) {
+            params.set('w', 'majority');
         }
         
-        return uri;
+        return `${baseUri}?${params.toString()}`;
     }
     
     return mongoUri;
