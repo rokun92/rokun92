@@ -54,7 +54,35 @@ const collectionName = 'posts';
 const reactionTypes: ReactionType[] = ['like', 'love', 'insight', 'clap'];
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? '';
 
-const client = new MongoClient(mongoUri);
+// Parse MongoDB URI and ensure SSL options are set for Atlas connections
+function getMongoUri(): string {
+    if (!mongoUri) {
+        return "";
+    }
+    
+    // Check if it's an Atlas connection (contains mongodb.net)
+    if (mongoUri.includes('mongodb.net')) {
+        // Add SSL and other required options if not already present
+        const separator = mongoUri.includes('?') ? '&' : '?';
+        let uri = mongoUri;
+        
+        if (!uri.includes('ssl=')) {
+            uri += `${separator}ssl=true`;
+        }
+        if (!uri.includes('retryWrites=')) {
+            uri += `${separator}retryWrites=true`;
+        }
+        if (!uri.includes('w=')) {
+            uri += `${separator}w=majority`;
+        }
+        
+        return uri;
+    }
+    
+    return mongoUri;
+}
+
+const client = new MongoClient(getMongoUri());
 let clientPromise: Promise<MongoClient> | null = null;
 
 app.use(express.json());
