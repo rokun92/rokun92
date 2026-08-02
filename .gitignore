@@ -1,4 +1,42 @@
+```
+# Dependencies
+node_modules/
+
+# Build artifacts
+dist/
+build/
+target/
+
+# Environment variables
 .env
-node_modules
-.puku
-.env.example
+.env.local
+*.env.*
+
+# Cache directories
+.cache/
+.node_cache/
+.npm/
+.yarn/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# IDE specific
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python specific (if applicable)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+```
